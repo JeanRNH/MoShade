@@ -1,0 +1,29 @@
+===============================
+
+How to compile moshade on Linux
+
+===============================
+For details on how to use moshade, please refer to the help file “how to use.txt”
+===============================
+
+Needed dependencies:
+g++ make toolchain + cmake
+
+Needed dependencies for visualisation: vtk or fltk 
+
+===============================
+
+Unpack the moshade package using the command in terminal “tar -zxf moshade_src.tar.gz”
+
+Go to your unpacked directory “/moshade_src”
+Create folder “build”
+Go to “/moshade_src/build”
+Open terminal in folder “/moshade_src/build”
+
+Type into terminal “cmake .. -DCMAKE_BUILD_TYPE=Release -DENABLE_VTK_INTERFACE=OFF -DENABLE_FLTK_INTERFACE=OFF -DINTERFACE_TYPE=NO” for making moshade without visualisation
+
+Type into terminal “make moshade”
+
+The executable “moshade” is created in the folder “/moshade_src/build”
+
+===============================

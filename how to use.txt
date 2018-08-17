@@ -1,0 +1,111 @@
+===============================
+
+How to use moshade on Linux and on Windows
+
+===============================
+For details on how to compile moshade, please refer to the help file “how to compile.txt”
+===============================
+
+Input files:
+.stl
+.gm
+
+Output:
+if not specified: output line displayed in terminal
+possibility to specify directory and file name; read instructions below
+
+===============================
+
+Run moshade on Linux & display help information:
+
+Open terminal
+Go to directory containing the executable “mosahde”
+Type into terminal “./moshade”
+
+
+Run moshade on Windows & display help information:
+
+Open Command prompt
+Go to directory containing the executable “moshade.exe”
+Type in Command prompt “moshade.exe”
+
+===============================
+
+General information (help):
+
+Moshade - compute average cross sections of complex geometrical shapes.
+
+This is free software (c) 2018 Eric Bechet - eric.bechet@cadxfem.org
+See the LICENCE file for license information.
+
+Usage : moshade file value [naive] [nproc val] [verbose]
+
+where
+		"file" is either a .stl ASCII STL file (stereolitography), or a composite .gm file
+		"value" is an integer telling how many samples are used to compute the average cross section for each variable,
+		"naive" tells to use a naive n*n integration quadrature instead of an optimized one.
+
+if "value" is zero, the part is simply displayed and no computations are done.
+
+"nproc val" sets the max number of threads for the computations (0=use all procs)
+
+"verbose" will print all values of the orientations and cross sections on the standard output with the following structure:
+		<topological info on the input file>
+		theta1 phi1 #tris cross-section1 projected-area1 ratio1 %
+		theta2 phi2 #tris cross-section2 projected-area2 ratio2 %
+		...
+		min_CS        phimin       thmin
+		max_CS        phimax       thmax
+At the end, the final values are printed
+		total_area volume  average_cross_section   ratio   number_of_samples
+
+===============================
+
+Usage examples:
+
+You can work from other directories than the one containing the “moshade” executable. You then need to give the right directory path.
+You can work with input and output files in different directories. You need to give the right directory path.
+
+
+The examples given below work in the following conditions:
+	Linux (for Windows replace “./moshade“ with “moshade.exe”)
+	“moshade” executable in “/moshade_src/build”
+	input files in “/moshade_src/structures”
+	output files in “/moshade_src/results” (to display the results in terminal only, remove the command “ > [file name]”)
+	commands run from “/moshade_src/build”
+	calculation for 4*10^2 samples (400 samples)
+
+./moshade ../structures/input_file_name.stl 10 > ../results/output_file_name.txt
+./moshade ../structures/input_file_name.gm 10 > ../results/output_file_name.txt
+
+./moshade ../structures/input_file_name.stl 10 verbose nproc 1 naive > ../results/output_file_name.txt
+./moshade ../structures/input_file_name.stl 10 nproc 2 verbose > ../results/output_file_name.txt
+./moshade ../structures/input_file_name.stl 10 nproc 0 verbose > ../results/output_file_name.txt
+./moshade ../structures/input_file_name.stl 10 verbose > ../results/output_file_name.txt
+
+
+Example given below works in the following conditions:
+	command run from directory containing the “moshade” executable
+	Linux (for Windows replace “./moshade“ with “moshade.exe”)
+	input file in the same directory as “moshade”
+	output displayed in terminal
+	calculation for 4*10^2 samples (400 samples)	
+
+./moshade input_file_name.stl 10
+
+===============================
+
+You can create as well batch input files for running multiple inputs (example on Linux):
+Create “filename.sh” in “gedit” (or other), containing:
+	{
+	./moshade ../structures/input_file_name1.stl 10 nproc 8 verbose > ../results/output_file_name1.txt
+	./moshade ../structures/input_file_name2.stl 10 nproc 8 verbose > ../results/output_file_name2.txt
+	./moshade ../structures/input_file_name3.stl 10 nproc 8 verbose > ../results/output_file_name3.txt
+	}
+Put filename.sh in e.g. “/moshade_src/build”
+Go to “/moshade_src/build”
+Type into terminal “chmod +x filename.sh”
+This renders “filename.sh” executable
+Type into terminal “./filename.sh”
+
+===============================
